@@ -169,7 +169,6 @@ btnLoan.addEventListener('click', function (e) {
 
   const amount = Number(inputLoanAmount.value);
   if (amount > 0 && currAccount.movements.some(mov => mov >= amount * 0.1)) {
-    inputLoanAmount.blur();
     inputLoanAmount.value = '';
     currAccount.movements.push(amount);
     updateUI(currAccount);
