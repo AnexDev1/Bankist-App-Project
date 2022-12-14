@@ -73,7 +73,8 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
-
+const toggleDark = document.querySelector('.dark_mode');
+const containerBody = document.querySelector('body');
 //functions
 const formatMovementDate = function (date, locale) {
   const calcDaysPassed = (date1, date2) =>
@@ -316,3 +317,33 @@ btnSort.addEventListener('click', function (e) {
 setInterval(() => {
   // console.log(new Date().toLocaleTimeString());
 }, 1000);
+
+//DARK MODE
+
+toggleDark.addEventListener('click', () => {
+  toggleDark.classList.toggle('active');
+  if (toggleDark.classList.contains('active')) {
+    containerBody.style.backgroundColor = '#333';
+    containerBody.style.color = '#f3f3f3';
+    inputLoginUsername.style.backgroundColor = '#222';
+    inputLoginUsername.style.border = 'none';
+    inputLoginPin.style.backgroundColor = '#222';
+    inputLoginPin.style.border = 'none';
+    containerMovements.style.backgroundColor = '#333';
+    containerMovements.style.color = '#fff';
+    toggleDark.style.backgroundColor = '#333';
+    containerMovements.style.border = '1px solid #fff';
+    document.querySelector('.icon').style.color = '#fff';
+    document.querySelector('.btn--sort').style.color = '#f3f3f3';
+  } else {
+    containerBody.style.backgroundColor = '#f3f3f3';
+    containerBody.style.color = '#333';
+    inputLoginUsername.style.backgroundColor = '#eee';
+    inputLoginUsername.style.border = 'none';
+    inputLoginPin.style.backgroundColor = '#eee';
+    containerMovements.style.backgroundColor = '#fff';
+    containerMovements.style.color = '#333';
+    toggleDark.style.backgroundColor = '#fff';
+    document.querySelector('.icon').style.color = '#333';
+  }
+});

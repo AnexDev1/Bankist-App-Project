@@ -145,7 +145,8 @@ nav {
   font-size: 1.1rem;
   text-transform: uppercase;
   font-weight: 500;
-  color: #666;
+  color: #999;
+  /* color: #fff; */
 }
 
 .movements__type--deposit {
@@ -294,4 +295,33 @@ h2 {
 .log_timer {
   font-weight: 600;
   font-size: 1.6rem;
+}
+
+.dark_mode {
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: -2px 16px 21px -13px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: -2px 16px 21px -13px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: -2px 16px 21px -13px rgba(0, 0, 0, 0.3);
+  border-radius: 3000px;
+  padding: 6px 6.5px;
+  margin-left: 2rem;
+  transform: translateX(-30px);
+}
+.icon {
+  width: 34px;
+  height: 34px;
+}
+.dark_mode span {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 1.1px;
+}
+.dark_mode:hover {
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+  transition: all 0.5s;
 }
