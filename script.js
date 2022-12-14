@@ -55,6 +55,7 @@ const labelSumIn = document.querySelector('.summary__value--in');
 const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInterest = document.querySelector('.summary__value--interest');
 const labelTimer = document.querySelector('.timer');
+const logTimer = document.querySelector('.log_timer');
 
 const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
@@ -198,6 +199,11 @@ let currAccount, timer;
 //LOGIN
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
+
+  setInterval(() => {
+    logTimer.textContent = new Date().toLocaleTimeString();
+  }, 1000);
+
   currAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
   if (currAccount?.pin === +inputLoginPin.value) {
     //Display UI and message
@@ -208,8 +214,8 @@ btnLogin.addEventListener('click', function (e) {
 
     const now = new Date();
     const options = {
-      hour: 'numeric',
-      minute: 'numeric',
+      // hour: 'numeric',
+      // minute: 'numeric',
       day: 'numeric',
       month: 'numeric',
       year: 'numeric',

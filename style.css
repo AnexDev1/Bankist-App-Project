@@ -290,3 +290,8 @@ h2 {
 .timer {
   font-weight: 600;
 }
+
+.log_timer {
+  font-weight: 600;
+  font-size: 1.6rem;
+}
