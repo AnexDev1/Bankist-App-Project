@@ -74,7 +74,7 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 //functions
-const formatMovementDate = function (date) {
+const formatMovementDate = function (date, locale) {
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
@@ -83,13 +83,8 @@ const formatMovementDate = function (date) {
   if (daysPassed === 0) return 'Today';
   if (daysPassed === 1) return 'Yesterday';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
-  else {
-    const year = date.getFullYear();
-    const month = `${date.getMonth() + 1}`.padStart(2, 0);
-    const day = `${date.getDate()}`.padStart(2, 0);
 
-    return `${day}/${month}/${year}`;
-  }
+  return new Intl.DateTimeFormat(locale).format(date);
 };
 //CREATES USERNAME FROM NAME STRING
 const createUserNames = function (accs) {
@@ -124,7 +119,7 @@ const displayMovements = function (acc, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[i]);
-    const displayDate = formatMovementDate(date);
+    const displayDate = formatMovementDate(date, acc.locale);
     const html = ` <div class="movements__row">
     <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
     <div class="movements__date">${displayDate}</div>
@@ -179,16 +174,18 @@ btnLogin.addEventListener('click', function (e) {
     containerApp.style.opacity = 1;
 
     const now = new Date();
-
-    const year = now.getFullYear();
-    const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    const day = `${now.getDate()}`.padStart(2, 0);
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-
-    const displayDate = `${day}/${month}/${year}, ${hours}:${minutes}`;
-
-    labelDate.textContent = displayDate;
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+      // weekday: 'long',
+    };
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currAccount.locale,
+      options
+    ).format(now);
     ///////////////////////////////
 
     inputLoginPin.value = inputLoginUsername.value = '';
