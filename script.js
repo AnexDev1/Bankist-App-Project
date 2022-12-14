@@ -170,12 +170,30 @@ const calcDisplaySummary = function (acc) {
   labelSumInterest.textContent = formatCurr(interest, acc.locale, acc.currency);
 };
 
-let currAccount;
+//SET TIMER
+const startLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(Math.trunc(time % 60)).padStart(2, 0);
+    labelTimer.textContent = `${min}:${sec}`;
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+    time--;
+  };
+  let time = 300;
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+let currAccount, timer;
 
 //FAKE LOGIN
-currAccount = account1;
-updateUI(currAccount);
-containerApp.style.opacity = 100;
+// currAccount = account1;
+// updateUI(currAccount);
+// containerApp.style.opacity = 100;
 
 //LOGIN
 btnLogin.addEventListener('click', function (e) {
@@ -206,6 +224,9 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginPin.value = inputLoginUsername.value = '';
     inputLoginPin.blur();
     inputLoginPin.style.border = 'none';
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
+
     //display movements
     updateUI(currAccount);
   } else {
@@ -239,6 +260,8 @@ btnTransfer.addEventListener('click', function (e) {
     receiverAcc.movementsDates.push(new Date().toISOString());
 
     updateUI(currAccount);
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -249,9 +272,13 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(+inputLoanAmount.value);
   if (amount > 0 && currAccount.movements.some(mov => mov >= amount * 0.1)) {
     inputLoanAmount.value = '';
-    currAccount.movements.push(amount);
-    currAccount.movementsDates.push(new Date().toISOString());
-    updateUI(currAccount);
+    setTimeout(function () {
+      currAccount.movements.push(amount);
+      currAccount.movementsDates.push(new Date().toISOString());
+      updateUI(currAccount);
+      clearInterval(timer);
+      timer = startLogOutTimer();
+    }, 3000);
   }
 });
 
@@ -280,3 +307,6 @@ btnSort.addEventListener('click', function (e) {
   sorted = !sorted;
 });
 /////////////////////////////////////////////////
+setInterval(() => {
+  // console.log(new Date().toLocaleTimeString());
+}, 1000);
